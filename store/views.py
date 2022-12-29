@@ -8,10 +8,12 @@ def index(request):
     products = None
     categories = Category.get_all_categories()
     categoryId = request.GET.get('category')
-
     if categoryId:
-        products = Product.get_all_products_by_categoryId(
-            category_id=categoryId)
+        if categoryId == "-1":
+            products = Product.get_all_products()
+        else:
+            products = Product.get_all_products_by_categoryId(
+                category_id=categoryId)
     else:
         products = Product.get_all_products()
     data = {

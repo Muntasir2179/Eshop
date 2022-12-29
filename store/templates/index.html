@@ -5,7 +5,11 @@
     <div class="row">
         {% comment %} filter {% endcomment %}
         <div class="col-lg-2 mx-auto">
+            <div>
+                <p class="alert alert-success mb-3 font h5 text-center">Categories</p>
+            </div>
             <div class="list-group">
+                <a href="/?category=-1" class="list-group-item list-group-item-action">All</a>
                 {% for category in categories %}
                 <a href="/?category={{category.id}}" class="list-group-item list-group-item-action">{{category.name}}</a>
                 {% endfor %}
