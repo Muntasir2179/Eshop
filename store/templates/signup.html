@@ -14,23 +14,28 @@
                 <h2>Create Account</h2>
             </div>
             <div class="p-4">
+                {% if error %}
+                <div class="alert alert-danger" role="alert">
+                  <p class="mb-0 text-center">{{error}}</p>
+                </div>
+                {% endif %}
                 <form action="/signup/" method="post">
                     {% csrf_token %}
                     {% comment %} First name {% endcomment %}
                     <div class="mb-3">
-                        <input type="text" class="form-control" name="first_name" placeholder="First Name">
+                        <input type="text" class="form-control" name="first_name" value="{{values.first_name}}" placeholder="First Name">
                     </div>
                     {% comment %} Last Name {% endcomment %}
                     <div class="mb-3">
-                        <input type="text" class="form-control" name="last_name" placeholder="Last Name">
+                        <input type="text" class="form-control" name="last_name" value="{{values.last_name}}" placeholder="Last Name">
                     </div>
                     {% comment %} Phone NUmber {% endcomment %}
                     <div class="mb-3">
-                        <input type="text" class="form-control" name="phone" placeholder="Phone Number">
+                        <input type="text" class="form-control" name="phone" value="{{values.phone}}" placeholder="Phone Number">
                     </div>
                     {% comment %} Email {% endcomment %}
                     <div class="mb-3">
-                        <input type="email" class="form-control" name="email" placeholder="example@gmail.com">
+                        <input type="email" class="form-control" name="email" value="{{values.email}}" placeholder="example@gmail.com">
                     </div>
                     {% comment %} Password {% endcomment %}
                     <div class="mb-3">
