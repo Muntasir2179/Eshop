@@ -36,3 +36,17 @@ class Product(models.Model):
             return Product.objects.filter(category=category_id)
         else:
             return Product.objects.all()
+
+
+class Customer(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    phone = models.CharField(max_length=15)
+    email = models.EmailField()
+    password = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.first_name + " " + self.last_name
+
+    def register(self):
+        self.save()

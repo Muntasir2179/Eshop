@@ -9,7 +9,7 @@
                 <p class="alert alert-success mb-3 font h5 text-center">Categories</p>
             </div>
             <div class="list-group">
-                <a href="/?category=-1" class="list-group-item list-group-item-action">All</a>
+                <a href="/?category=-1" class="list-group-item list-group-item-action">All Products</a>
                 {% for category in categories %}
                 <a href="/?category={{category.id}}" class="list-group-item list-group-item-action">{{category.name}}</a>
                 {% endfor %}
