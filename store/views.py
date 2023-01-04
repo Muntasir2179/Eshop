@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.contrib.auth.hashers import make_password, check_password
 from .models import Product, Category, Customer
 
 # Create your views here.
@@ -24,60 +24,75 @@ def index(request):
     return render(request, 'index.html', context=data)
 
 
+# validation of users inputs
+def validateCustomer(customer):
+    error_message = None
+    if not customer.first_name:
+        error_message = "First Name Required."
+    elif len(customer.first_name) < 4:
+        error_message = "First Name must be 4 char long or more."
+    elif not customer.last_name:
+        error_message = "Last Name Required."
+    elif len(customer.last_name) < 4:
+        error_message = "Last Name must be 4 char long or more."
+    elif not customer.phone:
+        error_message = "Phone number required."
+    elif len(customer.phone) < 11:
+        error_message = "Phone number must be 11 char long."
+    elif not customer.password:
+        error_message = "Password required."
+    elif len(customer.password) < 5:
+        error_message = "Password must be 6 char long."
+    elif not customer.email:
+        error_message = "Email required."
+    elif customer.isExists():
+        error_message = "This email is already registered. Use another email to signup."
+
+    return error_message
+
+
+# This function will handle the POST request
+def registerUser(request):
+    # fetching data
+    first_name = request.POST.get('first_name')
+    last_name = request.POST.get('last_name')
+    phone = request.POST.get('phone')
+    email = request.POST.get('email')
+    password = request.POST.get('password')
+
+    value = {
+        'first_name': first_name,
+        'last_name': last_name,
+        'phone': phone,
+        'email': email,
+    }
+
+    customer = Customer(
+        first_name=first_name,
+        last_name=last_name,
+        phone=phone,
+        email=email,
+        password=password
+    )
+
+    error_message = validateCustomer(customer)
+
+    # saving data into the database
+    if not error_message:
+        # hashing the user entered password
+        customer.password = make_password(customer.password)
+        customer.register()
+        return redirect('index')
+    else:
+        data = {
+            'error': error_message,
+            'values': value
+        }
+        return render(request, 'signup.html', context=data)
+
+
 def signup(request):
     if request.method == 'GET':
         return render(request, 'signup.html')
     else:
-        # fetching data
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        phone = request.POST.get('phone')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-
-        # validation
-        value = {
-            'first_name': first_name,
-            'last_name': last_name,
-            'phone': phone,
-            'email': email,
-        }
-
-        error_message = None
-
-        if not first_name:
-            error_message = "First Name Required."
-        elif len(first_name) < 4:
-            error_message = "First Name must be 4 char long or more."
-        elif not last_name:
-            error_message = "Last Name Required."
-        elif len(last_name) < 4:
-            error_message = "Last Name must be 4 char long or more."
-        elif not phone:
-            error_message = "Phone number required."
-        elif len(phone) < 11:
-            error_message = "Phone number must be 11 char long."
-        elif not password:
-            error_message = "Password required."
-        elif len(password) < 5:
-            error_message = "Password must be 6 char long."
-        elif not email:
-            error_message = "Email required."
-
-        # saving data into the database
-        if not error_message:
-            customer = Customer(
-                first_name=first_name,
-                last_name=last_name,
-                phone=phone,
-                email=email,
-                password=password
-            )
-            customer.register()
-            return HttpResponse("<h1>Signup successful.</h1>")
-        else:
-            data = {
-                'error': error_message,
-                'values': value
-            }
-            return render(request, 'signup.html', context=data)
+        return registerUser(request)

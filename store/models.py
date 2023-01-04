@@ -50,3 +50,9 @@ class Customer(models.Model):
 
     def register(self):
         self.save()
+
+    # checking if the user already exist or not
+    def isExists(self):
+        if Customer.objects.filter(email=self.email):
+            return True
+        return False
