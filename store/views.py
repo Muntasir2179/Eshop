@@ -96,3 +96,20 @@ def signup(request):
         return render(request, 'signup.html')
     else:
         return registerUser(request)
+
+
+def login(request):
+    if request.method == 'GET':
+        return render(request, 'login.html')
+    else:
+        user_email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        # getting the data of the customer if he/she has already registered
+        customer = Customer.get_customer_by_email(user_email)
+
+        # checking if the customer exists and its password matches or not with the hashed password
+        if customer and check_password(password, customer.password):
+            return redirect('index')
+        else:
+            return render(request, 'login.html', {'error': "Incorrect Email or Password."})
