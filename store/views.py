@@ -6,23 +6,47 @@ from django.views import View
 # Create your views here.
 
 
-def index(request):
-    products = None
-    categories = Category.get_all_categories()
-    categoryId = request.GET.get('category')
-    if categoryId:
-        if categoryId == "-1":
-            products = Product.get_all_products()
+class Index(View):
+    # when user clicks on "add to cart"
+    def post(self, request):
+        product_id = request.POST.get('product')
+        cart = request.session.get('cart')
+
+        # if user clicked on the button "add to card" we will get a dictionary with the values of products id
+        if cart:
+            # if cart exists
+            quantity = cart.get(product_id)
+            if quantity:
+                cart[product_id] = quantity + 1
+            else:
+                cart[product_id] = 1
         else:
-            products = Product.get_all_products_by_categoryId(
-                category_id=categoryId)
-    else:
-        products = Product.get_all_products()
-    data = {
-        'products': products,
-        'categories': categories,
-    }
-    return render(request, 'index.html', context=data)
+            # if cart does not exists then create a card dictionary and add the item
+            cart = {}
+            cart[product_id] = 1
+
+        print(request.session.get('cart'))
+        request.session['cart'] = cart
+        return redirect('index')
+
+    # when user wants to visit homepage
+    def get(self, request):
+        products = None
+        categories = Category.get_all_categories()
+        categoryId = request.GET.get('category')
+        if categoryId:
+            if categoryId == "-1":
+                products = Product.get_all_products()
+            else:
+                products = Product.get_all_products_by_categoryId(
+                    category_id=categoryId)
+        else:
+            products = Product.get_all_products()
+        data = {
+            'products': products,
+            'categories': categories,
+        }
+        return render(request, 'index.html', context=data)
 
 
 class Signup(View):

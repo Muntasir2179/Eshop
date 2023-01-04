@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{% load cart %}
 
 {% block content %}
-<div class="container-fluid mt-5">
+<div class="container-fluid mt-5 pt-5">
     <div class="row">
-        {% comment %} filter {% endcomment %}
+        {% comment %} categories {% endcomment %}
         <div class="col-lg-2 mx-auto">
             <div>
                 <p class="alert alert-success mb-3 font h5 text-center">Categories</p>
@@ -26,7 +27,22 @@
                         <hr>
                         <p class="card-title">{{product.name}}</p>
                         <p class="card-text"><b>{{product.price}}</b></p>
-                        <a href="#" class="btn btn-light border btn-sm">Add To Cart</a>
+
+                        {% comment %}
+                        using custom filter from cart.py
+                        "request" is also accessible in html template
+                        {% endcomment %}
+                        {{ product | is_in_cart:request.session.cart }}
+
+
+                        <form action="/" method="POST">
+                            {% csrf_token %}
+                            {% comment %} <input type="submit" class="btn btn-light border btn-sm" value="Add To Cart"> {% endcomment %}
+                            {% comment %} <input type="text" name="product">{{product.id}}</input> {% endcomment %}
+                            <input type="text" name="product" value="{{product.id}}" hidden>
+                            <input type="submit" class="btn btn-dark" value="Add To Cart">
+                            {% comment %} <button type="submit" class="btn btn-dark" name="product"><i class="fas fa-cart-plus"></i> Add To Cart</button> {% endcomment %}
+                        </form>
                     </div>
                 </div>
                 {% endfor %}
