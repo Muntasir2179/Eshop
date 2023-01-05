@@ -42,8 +42,34 @@
         </table>
 
         <div class="m-3 p-3">
-            <a href="#" class="btn btn-outline-success col-lg-3 float-right">Check Out</a>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-success col-lg-3 float-right">Check Out</a>
         </div>
     </div>
 </div>
+
+{% comment %} modal starts {% endcomment %}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Check Out Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/check-out">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                      <input type="text" name="address" class="form-control" placeholder="Enter address">
+                    </div>
+                    <div class="mb-3">
+                      <input type="text" name="phone" class="form-control" placeholder="Enter phone number">
+                    </div>
+                    <input type="submit" class="btn float-right btn-outline-info col-lg-6">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% comment %} modal ends {% endcomment %}
 {% endblock content %}
