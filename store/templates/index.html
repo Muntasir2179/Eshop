@@ -17,37 +17,60 @@
             </div>
         </div>
 
-        {% comment %} all products {% endcomment %}
+        {% comment %} all products starts {% endcomment %}
         <div id="products" class="col-lg-9 mx-auto">
             <div class="row mx-auto">
                 {% for product in products %}
-                <div class="card mx-2 p-0 mb-4 shadow" style="width: 18rem;">
+                <div class="card mx-2 p-0 mb-4 shadow" id="{{product.id}}" style="width: 18rem;">
                     <img src="{{product.image.url}}" class="card-img-top image-cover" alt="" height="300px">
                     <div class="card-body">
                         <hr>
                         <p class="card-title">{{product.name}}</p>
                         <p class="card-text"><b>{{product.price}}</b></p>
+                    </div>
 
-                        {% comment %}
-                        using custom filter from cart.py
-                        "request" is also accessible in html template
-                        {% endcomment %}
-                        {{ product | is_in_cart:request.session.cart }}
+                    <div class="card-footer p-0">
+                        {% comment %} using custom filter from cart.py. "request" is also accessible in html template {% endcomment %}
+                        {% if product|is_in_cart:request.session.cart %}
+                        {% comment %} quantity increment and decrement starts {% endcomment %}
+                        <div class="row g-0">
+                            {% comment %} minus button starts {% endcomment %}
+                            <form action="/#{{product.id}}" method="POST" class="col-2">
+                                {% csrf_token %}
+                                <input type="text" name="product" value="{{product.id}}" hidden>
+                                <input type="text" name="remove" value="True" hidden>
+                                <input type="submit" value=" - " class="btn btn-block btn-dark">
+                            </form>
+                            {% comment %} minus button ends {% endcomment %}
 
+                            <div class="text-center col pt-2">{{product|cart_quantity:request.session.cart}} in Cart</div>
 
-                        <form action="/" method="POST">
+                            {% comment %} plus button starts {% endcomment %}
+                            <form action="/#{{product.id}}" method="POST" class="col-2">
+                                {% csrf_token %}
+                                <input type="text" name="product" value="{{product.id}}" hidden>
+                                <input type="submit" value=" + " class="btn btn-block btn-dark">
+                            </form>
+                            {% comment %} plus button ends {% endcomment %}
+                        </div>
+                        {% comment %} quantity increment and decrement starts {% endcomment %}
+
+                        {% else %}
+                        {% comment %} Add to Cart Button starts {% endcomment %}
+                        <form action="/#{{product.id}}" method="POST" class="btn-block">
                             {% csrf_token %}
-                            {% comment %} <input type="submit" class="btn btn-light border btn-sm" value="Add To Cart"> {% endcomment %}
-                            {% comment %} <input type="text" name="product">{{product.id}}</input> {% endcomment %}
                             <input type="text" name="product" value="{{product.id}}" hidden>
-                            <input type="submit" class="btn btn-dark" value="Add To Cart">
-                            {% comment %} <button type="submit" class="btn btn-dark" name="product"><i class="fas fa-cart-plus"></i> Add To Cart</button> {% endcomment %}
+                            <input type="submit" class="btn btn-dark border form-control" value="Add To Cart">
                         </form>
+                        {% comment %} Add to Cart Button ends {% endcomment %}
+                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
             </div>
         </div>
+        {% comment %} all products ends {% endcomment %}
+
     </div>
 </div>
 {% endblock content %}

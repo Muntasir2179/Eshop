@@ -10,6 +10,7 @@ class Index(View):
     # when user clicks on "add to cart"
     def post(self, request):
         product_id = request.POST.get('product')
+        remove = request.POST.get('remove')
         cart = request.session.get('cart')
 
         # if user clicked on the button "add to card" we will get a dictionary with the values of products id
@@ -17,7 +18,13 @@ class Index(View):
             # if cart exists
             quantity = cart.get(product_id)
             if quantity:
-                cart[product_id] = quantity + 1
+                if remove:
+                    if quantity <= 1:
+                        cart.pop(product_id)
+                    else:
+                        cart[product_id] = quantity - 1
+                else:
+                    cart[product_id] = quantity + 1
             else:
                 cart[product_id] = 1
         else:
@@ -31,6 +38,11 @@ class Index(View):
 
     # when user wants to visit homepage
     def get(self, request):
+        # creating cart for the user who logged in
+        cart = request.session.get('cart')
+        if not cart:
+            request.session.cart = {}
+
         products = None
         categories = Category.get_all_categories()
         categoryId = request.GET.get('category')
