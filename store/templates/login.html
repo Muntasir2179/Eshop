@@ -10,7 +10,7 @@
 <body>
     <div class="container pt-5">
         <div class="col-lg-5 shadow mx-auto p-0 mt-5">
-            <div class="alert alert-secondary text-center">
+            <div class="alert alert-secondary text-center bg-dark text-white">
                 <h2>Login</h2>
             </div>
             <div class="p-4">
@@ -23,19 +23,21 @@
                     {% csrf_token %}
                     {% comment %} Email {% endcomment %}
                     <div class="mb-3">
+                        <label for="" class="form-control border-0 px-1">Email</label>
                         <input type="email" class="form-control" name="email" value="{{values.email}}" placeholder="example@gmail.com">
                     </div>
                     {% comment %} Password {% endcomment %}
                     <div class="mb-3">
+                        <label for="" class="form-control border-0 px-1">Password</label>
                         <input type="password" class="form-control" name="password" placeholder="Enter your password">
+                    </div>
+                    <br>
+                    <div class="text-center btn-block">
+                        <input class="btn btn-dark form-control" type="submit" value="Login">
                     </div>
                     <br>
                     <div class="text-center">
                         <p>Not a member? <a href="{% url 'signup' %}">Register</a></p>
-                    </div>
-                    <br>
-                    <div class="text-center">
-                        <input class="btn btn-success" type="submit" value="Login">
                     </div>
                 </form>
             </div>

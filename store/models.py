@@ -37,6 +37,13 @@ class Product(models.Model):
         else:
             return Product.objects.all()
 
+    @staticmethod
+    def get_products_by_id(ids):
+        # ids are passed when user clicked on cart link in the navbar
+        # getting list in the function parameter
+        # passing that list of product ids in the filter()
+        return Product.objects.filter(id__in=ids)
+
 
 class Customer(models.Model):
     first_name = models.CharField(max_length=50)

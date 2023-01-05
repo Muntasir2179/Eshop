@@ -32,7 +32,6 @@ class Index(View):
             cart = {}
             cart[product_id] = 1
 
-        print(request.session.get('cart'))
         request.session['cart'] = cart
         return redirect('index')
 
@@ -150,6 +149,14 @@ class Login(View):
             return redirect('index')
         else:
             return render(request, 'login.html', {'error': "Incorrect Email or Password."})
+
+
+class Cart(View):
+    def get(self, request):
+        ids = list(request.session.get('cart').keys())
+        products = Product.get_products_by_id(ids)
+        print(products)
+        return render(request, 'cart.html')
 
 
 def logout(request):

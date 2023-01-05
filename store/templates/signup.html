@@ -10,7 +10,7 @@
 <body>
     <div class="container pt-5">
         <div class="col-lg-5 shadow mx-auto p-0 mt-5">
-            <div class="alert alert-secondary text-center">
+            <div class="alert alert-secondary text-center bg-dark text-white">
                 <h2>Create Account</h2>
             </div>
             <div class="p-4">
@@ -43,12 +43,12 @@
                     </div>
                     {% comment %} {{ form.as_p }} {% endcomment %}
                     <br>
-                    <div class="text-center">
-                        <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+                    <div class="text-center btn-block">
+                        <input class="btn btn-dark form-control" type="submit" value="Create Account">
                     </div>
                     <br>
                     <div class="text-center">
-                        <input class="btn btn-success" type="submit" value="Create Account">
+                        <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
                     </div>
                 </form>
             </div>
