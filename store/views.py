@@ -145,9 +145,14 @@ class Login(View):
         # checking if the customer exists and its password matches or not with the hashed password
         if customer and check_password(password, customer.password):
             # saving the information of user in session for further use
-            request.session['customer_id'] = customer.id
-            request.session['email'] = customer.email
+            request.session['customer'] = customer.id
             # now we can access these data from index page or index function
             return redirect('index')
         else:
             return render(request, 'login.html', {'error': "Incorrect Email or Password."})
+
+
+def logout(request):
+    # clearing the session. All the values will be removed including cart.
+    request.session.clear()
+    return redirect('login')

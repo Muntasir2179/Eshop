@@ -22,9 +22,16 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav mt-2 my-lg-0">
+                    {% if request.session.customer %}
+                    {% comment %} if customer is logged in then show the Logout button {% endcomment %}
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="/cart">Cart</a></li>
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="/oders">Oders</a></li>
                     <li class="nav-item"><a class="nav-link" aria-current="page" href="/logout">Logout</a></li>
+                    {% else %}
+                    {% comment %} if customer is not logged in then show the Login and Signup button {% endcomment %}
                     <li class="nav-item"><a class="nav-link" aria-current="page" href="/login">Login</a></li>
                     <li class="nav-item"><a class="nav-link" aria-current="page" href="/signup">Signup</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
