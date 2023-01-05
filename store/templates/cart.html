@@ -1,7 +1,49 @@
 {% extends 'base.html' %}
+{% load cart %}
 
 {% block content %}
 <div class="container pt-5">
-    <h1>Cart Page</h1>
+    <div class="border rounded m-5">
+        <p class="display-6 text-center bg-dark text-white py-2">Your Cart</p>
+        <table class="table text-center">
+            <thead>
+                <tr>
+                    <th>Sno</th>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr class="">
+                    <td>{{forloop.counter}}</td>
+                    <td><img style="height:80px;" class="rounded" src="{{product.image.url}}" alt=""></td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.price}}</td>
+                    <td>{{product|cart_quantity:request.session.cart}}</td>
+                    <td>{{product|price_total:request.session.cart}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+            <tfoot class="text-center">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>Total</th>
+                    <th>{{products|total_cart_price:request.session.cart}}</th>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="m-3 p-3">
+            <a href="#" class="btn btn-outline-success col-lg-3 float-right">Check Out</a>
+        </div>
+    </div>
 </div>
 {% endblock content %}
