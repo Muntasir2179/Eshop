@@ -16,15 +16,16 @@
                     <th>Total</th>
                 </tr>
             </thead>
+            {% if products %}
             <tbody>
                 {% for product in products %}
                 <tr class="">
                     <td>{{forloop.counter}}</td>
                     <td><img style="height:80px;" class="rounded" src="{{product.image.url}}" alt=""></td>
                     <td>{{product.name}}</td>
-                    <td>{{product.price}}</td>
+                    <td><i class="fa-solid fa-bangladeshi-taka-sign"></i> {{product.price}}</td>
                     <td>{{product|cart_quantity:request.session.cart}}</td>
-                    <td>{{product|price_total:request.session.cart}}</td>
+                    <td><i class="fa-solid fa-bangladeshi-taka-sign"></i> {{product|price_total:request.session.cart}}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -36,14 +37,23 @@
                     <th></th>
                     <th></th>
                     <th>Total</th>
-                    <th>{{products|total_cart_price:request.session.cart}}</th>
+                    <th><i class="fa-solid fa-bangladeshi-taka-sign"></i> {{products|total_cart_price:request.session.cart}}</th>
                 </tr>
             </tfoot>
+            {% else %}
+            <tfoot class="text-center">
+                <tr>
+                    <th colspan="6" class="h3 py-5">Cart is empty.</th>
+                </tr>
+            </tfoot>
+            {% endif %}
+            
         </table>
-
+        {% if products %}
         <div class="m-3 p-3">
             <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-success col-lg-3 float-right">Check Out</a>
         </div>
+        {% endif %}
     </div>
 </div>
 

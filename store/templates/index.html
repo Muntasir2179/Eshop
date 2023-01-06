@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 {% load cart %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static '/css/index.css' %}">
+{% endblock styles %}
 
 {% block content %}
 <div class="container-fluid mt-5 pt-5">
@@ -26,7 +31,7 @@
                     <div class="card-body">
                         <hr>
                         <p class="card-title">{{product.name}}</p>
-                        <p class="card-text"><b>{{product.price}}</b></p>
+                        <p class="card-text"><i class="fa-solid fa-bangladeshi-taka-sign"></i><b> {{product.price}}</b></p>
                     </div>
 
                     <div class="card-footer p-0">

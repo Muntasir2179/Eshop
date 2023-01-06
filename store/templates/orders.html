@@ -24,10 +24,10 @@
                     <td>{{forloop.counter}}</td>
                     <td><img style="height:80px;" class="rounded" src="{{order.product.image.url}}" alt=""></td>
                     <td>{{order.product.name}}</td>
-                    <td>{{order.price}}</td>
+                    <td><i class="fa-solid fa-bangladeshi-taka-sign"></i> {{order.price}}</td>
                     <td>{{order.date}}</td>
                     <td>{{order.quantity}}</td>
-                    <td>{{order.quantity|multiply:order.price}}</td>
+                    <td><i class="fa-solid fa-bangladeshi-taka-sign"></i> {{order.quantity|multiply:order.price}}</td>
                     {% comment %} <td>{% if order.status %}{{'Completed'}}{% else %}{{'Pending'}}{% endif %}</td> {% endcomment %}
                     {% if order.status %}
                     <td><span class="badge bg-success p-2">Completed</span></td>

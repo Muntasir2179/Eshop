@@ -121,6 +121,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# newly added line to serve static files like images, JavaScrips and CSS files
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
