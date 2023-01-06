@@ -191,3 +191,11 @@ class CheckOut(View):
         request.session['cart'] = {}
 
         return redirect('cart')
+
+
+class Orders(View):
+    def get(self, request):
+        customer_id = request.session.get('customer')
+        orders = Order.get_orders_by_customer(customer_id=customer_id)
+        # orders = orders.reverse()
+        return render(request, 'orders.html', {'orders': orders})
