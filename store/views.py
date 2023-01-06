@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
-from .models import Product, Category, Customer
+from .models import Product, Category, Customer, Order
 from django.views import View
 
 # Create your views here.
@@ -162,3 +162,32 @@ def logout(request):
     # clearing the session. All the values will be removed including cart.
     request.session.clear()
     return redirect('login')
+
+
+class CheckOut(View):
+    def post(self, request):
+        # fetching data from session and database
+        address = request.POST.get('address')
+        phone = request.POST.get('phone')
+        customer_id = request.session.get('customer')
+        cart = request.session.get('cart')
+        products = Product.get_products_by_id(ids=list(cart.keys()))
+
+        # in order to save every products order we need to iterate to each order
+        for product in products:
+            # foreign key fields takes object customer and product
+            order = Order(
+                customer=Customer(id=customer_id),
+                product=product,
+                price=product.price,
+                address=address,
+                phone=phone,
+                quantity=cart.get(str(product.id))
+            )
+            # saving order into the database
+            order.placeOrder()
+
+        # clearing the cart as the orders are saved into the database
+        request.session['cart'] = {}
+
+        return redirect('cart')

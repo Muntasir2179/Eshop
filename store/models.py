@@ -84,3 +84,6 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.customer.first_name) + " " + str(self.customer.last_name) + " " + str(self.date)
+
+    def placeOrder(self):
+        self.save()

@@ -48,7 +48,6 @@
 </div>
 
 {% comment %} modal starts {% endcomment %}
-
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -57,15 +56,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/check-out">
+                <form action="/check_out/" method="POST">
                     {% csrf_token %}
                     <div class="mb-3">
-                      <input type="text" name="address" class="form-control" placeholder="Enter address">
+                      <input type="text" name="address" class="form-control" placeholder="Enter address" aria-describedby="helpId">
                     </div>
                     <div class="mb-3">
-                      <input type="text" name="phone" class="form-control" placeholder="Enter phone number">
+                      <input type="text" name="phone" class="form-control" placeholder="Enter phone number" aria-describedby="helpId">
                     </div>
-                    <input type="submit" class="btn float-right btn-outline-info col-lg-6">
+                    <input type="submit" class="btn float-right btn-outline-info col-lg-6" value="Check Out">
                 </form>
             </div>
         </div>
