@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'store',
 ]
 
+# custom middleware added to authenticate user login
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'store.middleware.auth_middleware',
 ]
 
 ROOT_URLCONF = 'Eshop.urls'

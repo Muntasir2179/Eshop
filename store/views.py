@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
 from .models import Product, Category, Customer, Order
 from django.views import View
+from django.utils.decorators import method_decorator
+from .middleware import auth_middleware
 
 # Create your views here.
 
@@ -197,5 +199,5 @@ class Orders(View):
     def get(self, request):
         customer_id = request.session.get('customer')
         orders = Order.get_orders_by_customer(customer_id=customer_id)
-        # orders = orders.reverse()
+        orders = orders.reverse()
         return render(request, 'orders.html', {'orders': orders})

@@ -22,7 +22,11 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav mt-2 my-lg-0">
-                    <li class="nav-item"><a class="nav-link" aria-current="page" href="/cart">Cart</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/cart">Cart
+                            <span class="badge bg-info">{{request.session.cart.keys|length}}</span>
+                        </a>
+                    </li>
                     {% if request.session.customer %}
                     {% comment %} if customer is logged in then show the Logout button {% endcomment %}
                     <li class="nav-item"><a class="nav-link" aria-current="page" href="/orders">Oders</a></li>
