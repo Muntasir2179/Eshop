@@ -153,11 +153,13 @@ class Login(View):
 
 class Cart(View):
     def get(self, request):
-        ids = list(request.session.get('cart').keys())
-        if not ids:
-            ids = []
-        products = Product.get_products_by_id(ids)
-        print(products)
+        products = None
+        cart = request.session.get('cart')
+        if cart:
+            ids = list(cart.keys())
+            print(ids, "hello")
+            if ids:
+                products = Product.get_products_by_id(ids)
         return render(request, 'cart.html', {'products': products})
 
 
