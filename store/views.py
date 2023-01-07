@@ -3,6 +3,9 @@ from django.contrib.auth.hashers import make_password, check_password
 from .models import Product, Category, Customer, Order
 from django.views import View
 
+# pagination
+from django.core.paginator import Paginator
+
 # Create your views here.
 
 
@@ -53,8 +56,14 @@ class Index(View):
                     category_id=categoryId)
         else:
             products = Product.get_all_products()
+
+        # setting up pagination
+        pagination = Paginator(products, 8)
+        page = request.GET.get('page')
+        venues = pagination.get_page(page)
+
         data = {
-            'products': products,
+            'products': venues,
             'categories': categories,
         }
         return render(request, 'index.html', context=data)

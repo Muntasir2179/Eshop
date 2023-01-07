@@ -78,6 +78,22 @@
 
     </div>
 </div>
+
+<div class="d-flex justify-content-center py-5 fs-5" aria-label="Page navigation example">
+    <ul class="pagination">
+        {% if products.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{products.previous_page_number}}">Previous</a></li>
+        {% endif %}
+
+        <li class="page-item text-center px-2 pt-1 border">Page {{products.number}} of {{products.paginator.num_pages}}</li>
+
+        {% if products.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{products.next_page_number}}">Next</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{products.paginator.num_pages}}">Last</a></li>
+        {% endif %}
+    </ul>
+</div>
 {% endblock content %}
 
 {% block javascript %}
