@@ -2,8 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
 from .models import Product, Category, Customer, Order
 from django.views import View
-from django.utils.decorators import method_decorator
-from .middleware import auth_middleware
 
 # Create your views here.
 

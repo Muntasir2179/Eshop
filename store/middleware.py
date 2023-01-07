@@ -5,10 +5,8 @@ def auth_middleware(get_response):
     # One-time configuration and initialization.
 
     def middleware(request):
-        return_url = request.META['PATH_INFO']
         if not request.session.get('customer'):
-            return redirect(f'login?return_url={return_url}')
-            # return redirect(f'login?return_url={return_url}')
+            return redirect(f'login')
         # Code to be executed for each request before
         # the view (and later middleware) are called.
 
