@@ -58,7 +58,7 @@ class Index(View):
             products = Product.get_all_products()
 
         # setting up pagination
-        pagination = Paginator(products, 8)
+        pagination = Paginator(products, 10)
         page = request.GET.get('page')
         venues = pagination.get_page(page)
 
